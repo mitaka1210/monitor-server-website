@@ -1,0 +1,31 @@
+name: Site Monitor
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup environment variables
+        run: |
+          echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> $GITHUB_ENV
+          echo "CHAT_ID=${{ secrets.CHAT_ID }}" >> $GITHUB_ENV
+          echo "LOCAL_DB_HOST=${{ secrets.LOCAL_DB_HOST }}" >> $GITHUB_ENV
+          echo "LOCAL_DB_USER=${{ secrets.LOCAL_DB_USER }}" >> $GITHUB_ENV
+          echo "LOCAL_DB_PASSWORD=${{ secrets.LOCAL_DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "LOCAL_DB_PORT=${{ secrets.LOCAL_DB_PORT }}" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl postgresql-client
+
+      - name: Run monitor script
+        run: bash scripts/monitor.sh
