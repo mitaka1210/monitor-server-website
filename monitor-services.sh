@@ -1,12 +1,16 @@
 #!/bin/bash
 
 # Зареждане на променливи
-source /home/mitaka/scripts_server/.env
-
-SITE_URL="https://yourdomain.com"  # Твоят домейн
+SITE_URL="https://eng.d-dimitrov.eu"  # Твоят домейн
 STATE_FILE="/tmp/site_monitor_state"
 ALERT_COOLDOWN=300  # 5 минути между повтарящи се алерти
-
+# Променливи от GitHub Secrets
+: "${BOT_TOKEN:?Missing BOT_TOKEN}"
+: "${CHAT_ID:?Missing CHAT_ID}"
+: "${LOCAL_DB_HOST:?Missing LOCAL_DB_HOST}"
+: "${LOCAL_DB_USER:?Missing LOCAL_DB_USER}"
+: "${LOCAL_DB_PASSWORD:?Missing LOCAL_DB_PASSWORD}"
+: "${LOCAL_DB_PORT:?Missing LOCAL_DB_PORT}"
 # Telegram функция
 send_telegram() {
   local MESSAGE=$1
