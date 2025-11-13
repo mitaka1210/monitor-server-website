@@ -28,4 +28,4 @@ jobs:
           sudo apt-get install -y curl postgresql-client
 
       - name: Run monitor script
-        run: bash scripts/monitor.sh
+        run: bash scripts/monitor-services.sh
