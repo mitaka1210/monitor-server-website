@@ -147,13 +147,12 @@ website_status=$?
 
 # check_nodejs
 # nodejs_status=$?
-
 # Ако всичко е OK и е имало проблеми преди
 if [ $website_status -eq 0 ]; then
     # Имало е проблеми, сега всичко е ОК
     send_telegram "✅ *Всички системи работят нормално*\n\n🌐 URL: \`${SITE_URL}\`\n🕐 Време: \`$(date '+%Y-%m-%d %H:%M:%S')\`"
     echo "All systems operational"
-  fi
 fi
+
 
 echo "=== Monitor check completed at $(date) ==="
