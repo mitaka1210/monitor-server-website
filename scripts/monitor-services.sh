@@ -149,7 +149,7 @@ website_status=$?
 # nodejs_status=$?
 
 # Ако всичко е OK и е имало проблеми преди
-if [ $website_status -eq 0 ] && [ $db_status -eq 0 ] && [ $disk_status -eq 0 ] && [ $mem_status -eq 0 ] && [ $nodejs_status -eq 0 ]; then
+if [ $website_status -eq 0 ]; then
   if [ -s "$STATE_FILE" ]; then
     # Имало е проблеми, сега всичко е ОК
     echo "All systems operational"
