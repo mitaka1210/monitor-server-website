@@ -60,10 +60,10 @@ check_website() {
     fi
     return 1
   else
-    if [ -f "$STATE_FILE" ] && grep -q "^website:" "$STATE_FILE"; then
-      send_telegram "✅ *САЙТЪТ Е ВЪЗСТАНОВЕН!*\n\n🌐 URL: \`${SITE_URL}\`\n📊 HTTP код: \`${http_code}\`\n🕐 Време: \`$(date '+%Y-%m-%d %H:%M:%S')\`"
-      mark_recovered "website"
+    if [ "$http_code" = "200" ] || [ "$http_code" = "301" ] || [ "$http_code" = "302" ] || [ "$http_code" = "308" ]; then
+      send_telegram "✅ *САЙТЪТ Е ДОСТЪПЕН!*\n\n🌐 URL: \`${SITE_URL}\`\n📊 HTTP код: \`${http_code}\`\n🕐 Време: \`$(date '+%Y-%m-%d %H:%M:%S')\`"
     fi
+    mark_recovered "website"
     return 0
   fi
 }
@@ -150,9 +150,8 @@ website_status=$?
 
 # Ако всичко е OK и е имало проблеми преди
 if [ $website_status -eq 0 ]; then
-  if [ -s "$STATE_FILE" ]; then
     # Имало е проблеми, сега всичко е ОК
-        send_telegram "✅ *Всички системи работят нормално*\n\n🌐 URL: \`${SITE_URL}\`\n🕐 Време: \`$(date '+%Y-%m-%d %H:%M:%S')\`"
+    send_telegram "✅ *Всички системи работят нормално*\n\n🌐 URL: \`${SITE_URL}\`\n🕐 Време: \`$(date '+%Y-%m-%d %H:%M:%S')\`"
     echo "All systems operational"
   fi
 fi
