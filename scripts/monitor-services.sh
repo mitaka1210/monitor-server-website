@@ -54,7 +54,7 @@ mark_recovered() {
 check_website() {
   local http_code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "$SITE_URL")
   
-  if [ "$http_code" != "200" ] && [ "$http_code" != "301" ] && [ "$http_code" != "302" ]; then
+  if [ "$http_code" != "200" ] && [ "$http_code" != "301" ] && [ "$http_code" != "302" ] && [ "$http_code" != "308" ]; then
     if should_alert "website"; then
       send_telegram "🚨 *САЙТЪТ Е НЕДОСТЪПЕН!*\n\n🌐 URL: \`${SITE_URL}\`\n📊 HTTP код: \`${http_code}\`\n🕐 Време: \`$(date '+%Y-%m-%d %H:%M:%S')\`\n\n⚡ *Действия:*\n1️⃣ Провери сървъра\n2️⃣ Провери Nginx/PM2\n3️⃣ Пренасочи трафика към Vercel при нужда"
     fi
@@ -135,18 +135,18 @@ echo "=== Monitor check started at $(date) ==="
 
 check_website
 website_status=$?
+# Ако скрипта се изпълни на сървър с база данни, диск, памет и Node.js, махни коментарите от следващите редове
+# check_database
+# db_status=$?
 
-check_database
-db_status=$?
+# check_disk_space
+# disk_status=$?
 
-check_disk_space
-disk_status=$?
+# check_memory
+# mem_status=$?
 
-check_memory
-mem_status=$?
-
-check_nodejs
-nodejs_status=$?
+# check_nodejs
+# nodejs_status=$?
 
 # Ако всичко е OK и е имало проблеми преди
 if [ $website_status -eq 0 ] && [ $db_status -eq 0 ] && [ $disk_status -eq 0 ] && [ $mem_status -eq 0 ] && [ $nodejs_status -eq 0 ]; then
