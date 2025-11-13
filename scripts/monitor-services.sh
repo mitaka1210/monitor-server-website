@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Зареждане на променливи
-SITE_URL="https://eng.d-dimitrov.eu"  # Твоят домейн
+SITE_URL="https://eng.d-dimitrov.eu/Home-page"  # Твоят домейн
 STATE_FILE="/tmp/site_monitor_state"
 ALERT_COOLDOWN=300  # 5 минути между повтарящи се алерти
 # Променливи от GitHub Secrets
