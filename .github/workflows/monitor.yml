@@ -2,7 +2,7 @@ name: Site Monitor
 
 on:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/999995 * * * *"
   workflow_dispatch:
 
 jobs:
